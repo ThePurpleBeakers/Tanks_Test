@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,8 +21,17 @@ public class Runner extends ApplicationAdapter{
 	
 	Tank player1;
 	
+	World testWorld;
+	
 	public void create()
 	{
+		
+		try {
+			testWorld = new World("src/TestWorld.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		player1 = new Tank(new Texture("data/TankComplete.png"));
 		
@@ -45,6 +57,13 @@ public class Runner extends ApplicationAdapter{
 		player1.tankRender(stateTime);
 		
 		batch.begin();
+		
+		try {
+			testWorld.renderWorld();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		player1Controls.controllerActionsTank(player1, batch);
 		
